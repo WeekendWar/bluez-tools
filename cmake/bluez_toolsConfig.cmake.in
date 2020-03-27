@@ -1,0 +1,16 @@
+@PACKAGE_INIT@
+
+get_filename_component(bluez_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(glib_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(dbus_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+include(CMakeFindDependencyMacro)
+
+list(APPEND CMAKE_MODULE_PATH ${bluez_CMAKE_DIR} ${glib_CMAKE_DIR} ${dbus_CMAKE_DIR})
+find_package(bluez REQUIRED MODULE)
+find_package(glib REQUIRED MODULE)
+find_package(dbus REQUIRED MODULE)
+list(REMOVE_AT CMAKE_MODULE_PATH -1)
+
+if(NOT TARGET bluez_tools)
+    include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")
+endif(NOT TARGET bluez_tools)

@@ -175,15 +175,15 @@ int main(int argc, char *argv[])
 
 	context = g_option_context_new(" - a bluetooth agent");
 	g_option_context_add_main_entries(context, entries, NULL);
-	g_option_context_set_summary(context, "Version "PACKAGE_VERSION);
+	// g_option_context_set_summary(context, "Version "PACKAGE_VERSION);
 	g_option_context_set_description(context,
 			"`capability` can be one of:\n"
 			"   DisplayOnly\n"
 			"   DisplayYesNo (default)\n"
 			"   KeyboardOnly\n"
 			"   NoInputNoOutput\n\n"
-			"Report bugs to <"PACKAGE_BUGREPORT">."
-			"Project home page <"PACKAGE_URL">."
+			// "Report bugs to <"PACKAGE_BUGREPORT">."
+			// "Project home page <"PACKAGE_URL">."
 			);
 
 	if (!g_option_context_parse(context, &argc, &argv, &error)) {
@@ -234,16 +234,16 @@ int main(int argc, char *argv[])
 
 	Manager *manager = g_object_new(MANAGER_TYPE, NULL);
         
-        AgentManager *agent_manager = agent_manager_new();
+	AgentManager *agent_manager = agent_manager_new();
 
-        if(daemon_arg)
-            register_agent_callbacks(FALSE, pin_hash_table, mainloop, &error);
-        else
-            register_agent_callbacks(TRUE, pin_hash_table, mainloop, &error);
-        
-        exit_if_error(error);
-        
-        agent_manager_register_agent(agent_manager, AGENT_PATH, capability_arg, &error);
+	if(daemon_arg)
+			register_agent_callbacks(FALSE, pin_hash_table, mainloop, &error);
+	else
+			register_agent_callbacks(TRUE, pin_hash_table, mainloop, &error);
+	
+	exit_if_error(error);
+	
+	agent_manager_register_agent(agent_manager, AGENT_PATH, capability_arg, &error);
 	exit_if_error(error);
 	g_print("Agent registered\n");
         
